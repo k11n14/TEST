@@ -16,9 +16,26 @@
 	</body>
 	<script>
 		const canvas = document.getElementById("canvas");
-		const ctx = canvas.getContext("2d");
+		// const ctx = canvas.getContext("2d");
 
-		ctx.fillStyle = "green";
-		ctx.fillRect(10, 10, 150, 100);
+		// ctx.fillStyle = "green";
+		// // ()
+		// ctx.fillRect(10, 10, 150, 100);
+		// element = <canvas width="200" height="200"></canvas>
+		var context = canvas.getContext("2d");
+		// パスをリセット
+		context.beginPath();
+		// レクタングルの座標(50,50)とサイズ(75,50)を指定
+		context.rect(100, 50, 150, 50);
+		// 塗りつぶしの色
+		// context.fillStyle = "rgba(255,0,0,0.8)";
+		// 塗りつぶしを実行
+		// context.fill();
+		// 線の色
+		context.strokeStyle = "purple";
+		// 線の太さ
+		// context.lineWidth = 8;
+		// 線を描画を実行
+		context.stroke();
 	</script>
 </html>

@@ -1,0 +1,38 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>test4</title>
+	</head>
+	<body>
+		<canvas id="canvas" width="1000px" height="500px"></canvas>
+
+		<script>
+			function cropImg() {
+				const canvas = document.getElementById("canvas");
+				const ctx = canvas.getContext("2d");
+
+				const image = new Image();
+				image.src =
+					"https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=725&q=80";
+
+				image.onload = function () {
+					// drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+					// image - トリミングしてブラウザに表示する画像自体。
+					// sx（ソース画像の x 軸）-このパラメーターは、x 軸から画像を切り抜くまたは切り抜きを開始する場所を示します。
+					// sy（ソース画像の y 軸）-このパラメーターは、y 軸から画像を切り抜くまたは切り抜きを開始する場所を示します。
+					// sWidth - sx から始まる画像の幅
+					// sHeight - sy から始まる画像の高さ。
+					// dx - x 軸から画面に画像を描画し始めるポイント。
+					// dy - 画面上で y 軸から画像の描画を開始するポイント。
+					// dWidth - 画面に表示する必要のある画像の長さ。
+					// dHeight - 画面に表示する必要のある画像の高さ。
+					ctx.drawImage(image, 150, 200, 500, 300, 60, 60, 500, 300);
+				};
+			}
+
+			cropImg();
+		</script>
+	</body>
+</html>

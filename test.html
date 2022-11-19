@@ -4,39 +4,35 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<script
-			src="https://code.jquery.com/jquery-3.6.1.js"
-			integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-			crossorigin="anonymous"></script>
-		<title>test</title>
+		<title>Document</title>
 	</head>
-
 	<body>
-		
-		<canvas id="canvas"><img src="news_img.jpg" alt=""></canvas>
-	</body>
-	<script>
-		const canvas = document.getElementById("canvas");
-		// const ctx = canvas.getContext("2d");
+		<canvas id="canvas"></canvas>
+		<style>
+			canvas {
+				border: 1px solid silver;
+			}
+		</style>
+		<script>
+			var canvas = document.getElementById("canvas");
+			var c = canvas.getContext("2d");
 
-		// ctx.fillStyle = "green";
-		// // ()
-		// ctx.fillRect(10, 10, 150, 100);
-		// element = <canvas width="200" height="200"></canvas>
-		var context = canvas.getContext("2d");
-		// パスをリセット
-		context.beginPath();
-		// レクタングルの座標(50,50)とサイズ(75,50)を指定
-		context.rect(100, 50, 150, 50);
-		// 塗りつぶしの色
-		// context.fillStyle = "rgba(255,0,0,0.8)";
-		// 塗りつぶしを実行
-		// context.fill();
-		// 線の色
-		context.strokeStyle = "purple";
-		// 線の太さ
-		// context.lineWidth = 8;
-		// 線を描画を実行
-		context.stroke();
-	</script>
+			// パス
+			c.beginPath();
+			c.arc(50, 50, 50, 0, 2 * Math.PI, false);
+			// c.stroke();
+
+			// clip
+			c.clip();
+
+			// Image オブジェクトを生成
+			var img = new Image();
+			img.src = "news_img.jpg";
+
+			// 画像読み込み終了してから描画
+			img.onload = function () {
+				c.drawImage(img, 0, 0);
+			};
+		</script>
+	</body>
 </html>

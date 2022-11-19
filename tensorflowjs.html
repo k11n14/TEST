@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<title>test3</title>
+		<!-- テンソルフローのライブラリーをインストしてる所 -->
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+		<!-- テンソルフローのモデルをインストしてる所 -->
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+	</head>
+	<body>
+		<!-- htmlに画像を出力してるところ -->
+		<img id="first_img" src="image.jpg" />
+		<!-- 画像内に物体検出の表示させるためにある -->
+		<canvas id="canvas"></canvas>
+	</body>
+
+	<script>
+		//  イメージをモデルに渡しているところ？
+		const Second_img = document.querySelector("#first_img");
+
+		// モデルの呼び出し
+		cocoSsd.load().then(async (model) => {
+			// モデルで画像を検出してる所.
+			const predictions = await model.detect(Second_img);
+			console.log(predictions);
+			console.log(predictions[0]);
+			console.log(predictions[0].bbox);
+			console.log(predictions[0].bbox[0]);
+
+			//  htmlのcanvasの呼び出し
+			const canvas = document.querySelector("#canvas");
+			// キャンバスの大きさをイメージの大きさと合わせてる所
+			canvas.width = Second_img.width;
+			canvas.height = Second_img.height;
+			// 二次元の描写を宣言？してる所
+			const context = canvas.getContext("2d");
+			// キャンバスにイメージを描写させてる
+			context.drawImage(Second_img, 0, 0, Second_img.width, Second_img.height);
+			// 文字の大きさなど
+			// context.font = "10px Arial";
+
+			// console.log("number of detections: ", predictions.length);
+
+			// ループ処理？キャンバスの機能を使って表示させてるらしい？
+			// for (const p of predictions) {
+			for (i = 0; i < 1; i++) {
+				// if (p.class === "dining table") {
+				context.beginPath();
+				// context . rect(x, y, w, h)
+				// 四角形の左上のx座標 四角形の左上のy座標
+				// 四角形の幅 四角形の幅
+				context.rect(...predictions[i].bbox);
+				// context.lineWidth = 1;
+				// context.strokeStyle = "green";
+				// context.fillStyle = "green";
+				context.stroke();
+				// context.fillText(
+				// 	p.score.toFixed(3) + " " + p.class,
+				// 	p.bbox[0],
+				// 	p.bbox[1] > 10 ? p.bbox[1] - 5 : 10
+				// );
+				// }
+			}
+		});
+	</script>
+</html>

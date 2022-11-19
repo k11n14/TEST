@@ -2,7 +2,7 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8" />
-		<title>test3</title>
+		<title>mix</title>
 		<!-- テンソルフローのライブラリーをインストしてる所 -->
 		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 		<!-- テンソルフローのモデルをインストしてる所 -->
@@ -10,9 +10,11 @@
 	</head>
 	<body>
 		<!-- htmlに画像を出力してるところ -->
-		<img id="first_img" width="400" src="image.jpg" />
+		<img id="first_img" src="image.jpg" />
 		<!-- 画像内に物体検出の表示させるためにある -->
 		<canvas id="canvas"></canvas>
+		<div><img id="newImg" /></div>
+		<canvas id="canvas2"></canvas>
 	</body>
 
 	<script>
@@ -24,6 +26,9 @@
 			// モデルで画像を検出してる所.
 			const predictions = await model.detect(Second_img);
 			console.log(predictions);
+			console.log(predictions[0]);
+			console.log(predictions[0].bbox);
+			console.log(predictions[0].bbox[0]);
 
 			//  htmlのcanvasの呼び出し
 			const canvas = document.querySelector("#canvas");
@@ -41,7 +46,7 @@
 
 			// ループ処理？キャンバスの機能を使って表示させてるらしい？
 			// for (const p of predictions) {
-			for (i=0;i<1;i++) {
+			for (i = 0; i < 1; i++) {
 				// if (p.class === "dining table") {
 				context.beginPath();
 				// context . rect(x, y, w, h)
@@ -59,6 +64,49 @@
 				// );
 				// }
 			}
+			function chgImg() {
+				const png = canvas.toDataURL();
+				console.log(png);
+				document.getElementById("newImg").src = png;
+			}
+			chgImg();
+
+			function cropImg() {
+				const canvas2 = document.querySelector("#canvas2");
+				canvas2.width = predictions[0].bbox[2];
+				canvas2.height = predictions[0].bbox[3];
+				const omg2 = canvas.toDataURL();
+				console.log(omg2);
+				const ctx2 = canvas2.getContext("2d");
+
+				const image = new Image();
+				image.src = omg2;
+
+				image.onload = function () {
+					// drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+					// image - トリミングしてブラウザに表示する画像自体。
+					// sx（ソース画像の x 軸）-このパラメーターは、x 軸から画像を切り抜くまたは切り抜きを開始する場所を示します。
+					// sy（ソース画像の y 軸）-このパラメーターは、y 軸から画像を切り抜くまたは切り抜きを開始する場所を示します。
+					// sWidth - sx から始まる画像の幅
+					// sHeight - sy から始まる画像の高さ。
+					// dx - x 軸から画面に画像を描画し始めるポイント。
+					// dy - 画面上で y 軸から画像の描画を開始するポイント。
+					// dWidth - 画面に表示する必要のある画像の長さ。
+					// dHeight - 画面に表示する必要のある画像の高さ。
+					ctx2.drawImage(
+						image,
+						predictions[0].bbox[0],
+						predictions[0].bbox[1],
+						predictions[0].bbox[2],
+						predictions[0].bbox[3],
+						0,
+						0,
+						predictions[0].bbox[2],
+						predictions[0].bbox[3]
+					);
+				};
+			}
+			cropImg();
 		});
 	</script>
 </html>

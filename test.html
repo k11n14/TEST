@@ -7,32 +7,25 @@
 		<title>Document</title>
 	</head>
 	<body>
-		<canvas id="canvas"></canvas>
-		<style>
-			canvas {
-				border: 1px solid silver;
-			}
-		</style>
+		<div id="edit_area1">a</div>
+		<div id="edit_area2"></div>
 		<script>
-			var canvas = document.getElementById("canvas");
-			var c = canvas.getContext("2d");
-
-			// パス
-			c.beginPath();
-			c.arc(50, 50, 50, 0, 2 * Math.PI, false);
-			// c.stroke();
-
-			// clip
-			c.clip();
-
-			// Image オブジェクトを生成
-			var img = new Image();
-			img.src = "news_img.jpg";
-
-			// 画像読み込み終了してから描画
-			img.onload = function () {
-				c.drawImage(img, 0, 0);
+			const jojo01 = {
+				number: 1,
+				title: "ファントムブラッド",
+				hero: "ジョナサン・ジョースター",
+				rival: "ディオ・ブランドー",
+				sound: "メメタァ",
 			};
+			console.log(jojo01.sound);
+			console.log(jojo01["sound"]);
+			document.getElementById("edit_area1").textContent =jojo01["sound"] ;
+		</script>
+		<div id="edit_area1">a</div>
+		<p>Hello! I'm <span id="input"></span>.</p>
+
+		<script>
+			document.getElementById("input").innerHTML = "Robert";
 		</script>
 	</body>
 </html>
